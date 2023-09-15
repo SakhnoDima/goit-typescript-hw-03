@@ -26,17 +26,20 @@ abstract class House {
 
   constructor(public key: Key) {}
 
-  comeIn(person: Person): Person | undefined {
-    if (!this.door) return;
-    this.tenants.push(person);
-    console.log(`Welcome home ${person.getName()}`);
+  comeIn(person: Person): void {
+    if (this.door) {
+      this.tenants.push(person);
+      console.log(`Welcome home ${person.getName()}`);
+    } else {
+      console.log("Close");
+    }
   }
   abstract openDoor(key: Key): void;
 }
 
 class MyHouse extends House {
-  openDoor(key: object): void {
-    if (this.key === key) {
+  openDoor(key: Key): void {
+    if (this.key.getSignature === key.getSignature) {
       this.door = true;
     }
   }
